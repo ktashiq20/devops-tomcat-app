@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ump
+  namespace: ump
+spec:
+  type: LoadBalancer
+  selector:
+    app: ump
+  ports:
+    - port: 80
+      targetPort: 8080
