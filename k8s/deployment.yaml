@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ump
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ump
+  namespace: ump
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ump
+  template:
+    metadata:
+      labels:
+        app: ump
+    spec:
+      containers:
+        - name: ump
+          image: ktashiqacr02.azurecr.io/ump-tomcat:v1
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
