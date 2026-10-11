@@ -1,3 +1,4 @@
+replicaCount: 3
 image:
   repository: ktashiqacr02.azurecr.io/ump-tomcat
   tag: v1
