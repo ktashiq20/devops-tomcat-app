@@ -17,3 +17,9 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
+
+keyvault:
+  enabled: false
+  name: ""
+  clientId: ""
+  tenantId: ""
