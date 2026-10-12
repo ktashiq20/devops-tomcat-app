@@ -1,0 +1,40 @@
+---
+- name: Configure web servers
+  hosts: webservers
+  become: true
+  vars:
+    app_message: "Hello from Ansible"
+    packages:
+        - nginx
+        - curl
+        - htop
+
+  tasks:
+      - name: install packages
+        ansible.builtin.apt:
+          name: "{{ packages }}"
+          state: present
+          update_cache: true
+          cache_valid_time: 3600
+
+      - name: Deploy home page
+        ansible.builtin.template:
+          src: index.html.j2
+          dest: /var/www/html/index.html
+          mode: "0644"
+        notify: Restart nginx
+
+      - name: Make sure nginx is running and start on boot
+        ansible.builtin.service:
+          name: nginx
+          state: started
+          enabled: true
+
+  handlers:
+      - name: Restart nginx
+        ansible.builtin.service:
+          name: nginx
+          state: restarted
+
+
+

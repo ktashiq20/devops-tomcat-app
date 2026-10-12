@@ -1,0 +1,6 @@
+---
+app_message: "Hello from Ansible"
+packages:
+  - nginx
+  - curl
+  - htop
