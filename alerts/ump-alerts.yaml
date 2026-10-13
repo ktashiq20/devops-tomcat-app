@@ -1,0 +1,41 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ump-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: ump.rules
+      rules:
+        - alert: AlwaysFiring
+          expr: vector(1)
+          for: 0m
+          labels:
+            severity: info
+          annotations:
+            summary: "Test alert that always fires"
+        - alert: PodRestartingRepeatedly
+          expr: increase(kube_pod_container_status_restarts_total[10m]) > 2
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "{{ $labels.namespace }}/{{ $labels.pod }} keeps restarting"
+            runbook_url: "https://github.com/ktashiq20/devops-tomcat-app/blob/main/docs/runbooks/pod-restarting.md"
+        - alert: UmpUnavailable
+          expr: kube_deployment_status_replicas_available{namespace="ump", deployment="ump"} < 1
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "No ump pods are available"
+            runbook_url: "https://github.com/ktashiq20/devops-tomcat-app/blob/main/docs/runbooks/ump-unavailable.md"
+        - alert: NodeMemoryHigh
+          expr: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) > 0.85
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Node {{ $labels.instance }} memory above 85%"
