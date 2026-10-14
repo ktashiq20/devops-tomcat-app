@@ -1,0 +1,12 @@
+replicaCount: 1
+image:
+  repository: ktashiqacr02.azurecr.io/ump-tomcat
+service:
+  type: ClusterIP
+  port: 80
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    memory: 512Mi
