@@ -1,9 +1,11 @@
 resource "azurerm_resource_group" "rg" {
+  tags = var.tags
   name     = "${var.prefix}-rg"
   location = var.location
 }
 
 resource "azurerm_container_registry" "acr" {
+  tags = var.tags
   name                = var.acr_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -11,6 +13,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
+  tags = var.tags
   name                = "${var.prefix}-aks"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
