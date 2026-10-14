@@ -1,0 +1,10 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Local-only Terraform state. Gitignored, never committed."
+paths = ['''terraform/terraform\.tfstate.*''']
+
+[[allowlists]]
+description = "Grafana dashboard exports. The 'key' fields are UI IDs, reviewed."
+paths = ['''monitoring/dashboards/.*\.json''']
