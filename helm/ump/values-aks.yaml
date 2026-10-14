@@ -7,7 +7,7 @@ service:
   port: 80
 
 keyvault:
-  enabled: true
+  enabled: false
   name: kv-ump-ktashiq4240
   clientId: 9dfecc6e-d1fa-4798-bc1b-e258f9571abe
   tenantId: 4b8a22a9-cb6e-41d0-93ce-58e8fd6dfceb
